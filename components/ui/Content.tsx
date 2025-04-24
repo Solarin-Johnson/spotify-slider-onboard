@@ -18,8 +18,8 @@ export default function Content({
   return (
     <View style={styles.container}>
       <LinearGradient
-        colors={[bg, bg, "transparent"]}
-        locations={[0, 0.6, 1]}
+        colors={[bg, bg, bg + "60", "transparent"]}
+        locations={[0, 0.6, 0.9, 1]}
         style={styles.background}
       />
       {titleComponent ||
@@ -46,7 +46,9 @@ const styles = StyleSheet.create({
     left: 0,
     padding: 18,
     paddingVertical: 16,
+    paddingBottom: 42,
     gap: 12,
+    zIndex: 10,
   },
   background: {
     position: "absolute",

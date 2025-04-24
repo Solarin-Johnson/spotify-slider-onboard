@@ -13,6 +13,7 @@ export const Colors = {
     barColor: "#000000",
     tint: tintColorLight,
     spotifyGreen: "#00BA45",
+    invertedBg: "#000",
   },
   dark: {
     text: "#ECEDEE",
@@ -20,5 +21,6 @@ export const Colors = {
     barColor: "#000000",
     tint: tintColorDark,
     spotifyGreen: "#00BA45",
+    invertedBg: "#ffffff",
   },
 };

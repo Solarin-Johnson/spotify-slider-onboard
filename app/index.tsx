@@ -8,11 +8,12 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import Content from "@/components/ui/Content";
 import { FloatingButton } from "@/components/ui/Button";
 import BrandLogo from "@/components/ui/BrandLogo";
+import Slider from "@/components/Slider";
 
 export default function Index() {
   const text = useThemeColor({}, "text");
   const brand = useThemeColor({}, "spotifyGreen");
-  const background = useThemeColor({}, "background");
+  const bgInv = useThemeColor({}, "invertedBg");
 
   return (
     <ThemedView style={styles.container}>
@@ -27,7 +28,9 @@ export default function Index() {
               borderRadius: 50,
             }}
           >
-            <ThemedText style={styles.text}>Skip</ThemedText>
+            <ThemedText style={styles.text} type="defaultSemiBold">
+              Skip
+            </ThemedText>
           </View>
         }
         titleComponent={
@@ -64,9 +67,9 @@ export default function Index() {
               <View
                 style={{
                   borderRadius: 50,
-                  backgroundColor: text + "40",
+                  backgroundColor: text + "30",
                   borderWidth: 2.5,
-                  borderColor: text + "40",
+                  borderColor: text + "30",
                   overflow: "hidden",
                 }}
               >
@@ -90,11 +93,12 @@ export default function Index() {
           }
           description="Link your Spotify to track your favorite artists and get concert recommendations tailored to your listening."
         />
+        <Slider />
       </View>
       <FloatingButton
         right={20}
         style={{
-          backgroundColor: text,
+          backgroundColor: bgInv,
           paddingVertical: 12,
           paddingHorizontal: 24,
           borderRadius: 25,
@@ -106,13 +110,13 @@ export default function Index() {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              gap: 6,
+              gap: 8,
               paddingVertical: 2,
             }}
           >
-            <BrandLogo size={24} />
+            <BrandLogo size={25} />
             <ThemedText
-              style={{ color: brand, fontSize: 16, lineHeight: 20 }}
+              style={{ color: brand, fontSize: 16, lineHeight: 24 }}
               type="title"
             >
               Connect Spotify
@@ -132,6 +136,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 13,
+    lineHeight: 28,
     paddingHorizontal: 12,
   },
 });

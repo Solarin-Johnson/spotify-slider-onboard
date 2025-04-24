@@ -8,6 +8,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import { LinearGradient } from "expo-linear-gradient";
 
 interface ButtonProps {
   text?: string;
@@ -86,13 +87,20 @@ export const FloatingButton = ({
         {
           bottom: bottom,
           right: left === undefined ? right : undefined,
-          paddingBottom: safeBottom + 28,
+          paddingBottom: safeBottom + 21,
           left,
           top,
-          backgroundColor: bg + "80",
+          // backgroundColor: bg + "80",
         },
       ]}
     >
+      <LinearGradient
+        colors={[bg, bg + "90", bg + "50", "transparent"]}
+        locations={[0, 0.5, 0.8, 1]}
+        start={{ x: 0, y: 1 }}
+        end={{ x: 0, y: 0 }}
+        style={styles.background}
+      />
       <Button {...props} style={style} />
     </View>
   );
@@ -120,6 +128,14 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 18,
     paddingVertical: 42,
+    zIndex: 10,
+  },
+  background: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
 });
 
