@@ -21,6 +21,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
+    InterRegular: require("../assets/fonts/Inter-Regular.ttf"),
     InterMedium: require("../assets/fonts/Inter-Medium.ttf"),
     InterBold: require("../assets/fonts/Inter-Bold.ttf"),
     InterSemiBold: require("../assets/fonts/Inter-SemiBold.ttf"),

@@ -12,11 +12,13 @@ export const Colors = {
     background: "#fff",
     barColor: "#000000",
     tint: tintColorLight,
+    spotifyGreen: "#00BA45",
   },
   dark: {
     text: "#ECEDEE",
-    background: "#1F1F1F",
+    background: "#151515",
     barColor: "#000000",
     tint: tintColorDark,
+    spotifyGreen: "#00BA45",
   },
 };

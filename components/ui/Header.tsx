@@ -1,5 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import AdaptiveElement from "./AdaptiveElement";
 
 interface HeaderProps {
   title?: string;
@@ -18,34 +20,44 @@ const Header: React.FC<HeaderProps> = ({
   onLeftPress,
   onRightPress,
 }) => {
+  const { top } = useSafeAreaInsets();
   return (
-    <View style={styles.container}>
-      <View style={styles.leftContainer}>
-        {leftComponent ? (
-          <TouchableOpacity onPress={onLeftPress}>
-            {leftComponent}
-          </TouchableOpacity>
-        ) : (
-          <View style={styles.buttonPlaceholder} />
-        )}
-      </View>
+    <View
+      style={[
+        styles.container,
+        {
+          paddingTop: top + 16,
+        },
+      ]}
+    >
+      <View style={styles.content}>
+        <View style={styles.leftContainer}>
+          {leftComponent ? (
+            <TouchableOpacity onPress={onLeftPress}>
+              <AdaptiveElement>{leftComponent}</AdaptiveElement>
+            </TouchableOpacity>
+          ) : (
+            <View style={styles.buttonPlaceholder} />
+          )}
+        </View>
 
-      <View style={styles.centerContainer}>
-        {title ? (
-          <Text style={styles.title}>{title}</Text>
-        ) : titleComponent ? (
-          titleComponent
-        ) : null}
-      </View>
+        <View style={styles.centerContainer}>
+          {title ? (
+            <Text style={styles.title}>{title}</Text>
+          ) : titleComponent ? (
+            titleComponent
+          ) : null}
+        </View>
 
-      <View style={styles.rightContainer}>
-        {rightComponent ? (
-          <TouchableOpacity onPress={onRightPress}>
-            {rightComponent}
-          </TouchableOpacity>
-        ) : (
-          <View style={styles.buttonPlaceholder} />
-        )}
+        <View style={styles.rightContainer}>
+          {rightComponent ? (
+            <TouchableOpacity onPress={onRightPress}>
+              <AdaptiveElement>{rightComponent}</AdaptiveElement>
+            </TouchableOpacity>
+          ) : (
+            <View style={styles.buttonPlaceholder} />
+          )}
+        </View>
       </View>
     </View>
   );
@@ -53,21 +65,23 @@ const Header: React.FC<HeaderProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    height: 60,
+    // backgroundColor:  "red",
+    paddingVertical: 16,
+    paddingHorizontal: 18,
+  },
+  content: {
+    // height: 28,
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 15,
-    backgroundColor: "#fff",
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
   },
   leftContainer: {
     flex: 1,
     alignItems: "flex-start",
   },
   centerContainer: {
-    flex: 3,
+    flex: 2,
     alignItems: "center",
   },
   rightContainer: {

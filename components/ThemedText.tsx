@@ -1,5 +1,8 @@
-import { Text, type TextProps, StyleSheet } from "react-native";
+import { Text, type TextProps, StyleSheet, PixelRatio } from "react-native";
 import { useThemeColor } from "@/hooks/useThemeColor";
+
+export const FACTOR = PixelRatio.getPixelSizeForLayoutSize(2);
+const TITLE_SIZE = 36 + FACTOR;
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
@@ -42,12 +45,14 @@ const styles = StyleSheet.create({
     fontFamily: "InterSemiBold",
   },
   title: {
-    fontSize: 32,
-    fontWeight: "bold",
-    lineHeight: 32,
+    fontSize: TITLE_SIZE,
+    lineHeight: TITLE_SIZE,
+    fontFamily: "InterSemiBold",
+    letterSpacing: -0.6,
   },
   subtitle: {
-    fontSize: 15,
+    fontSize: 16,
+    fontFamily: "InterRegular",
   },
   link: {
     lineHeight: 30,
