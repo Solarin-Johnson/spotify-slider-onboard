@@ -1,6 +1,8 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import { FACTOR, ThemedText } from "../ThemedText";
+import { LinearGradient } from "expo-linear-gradient";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function Content({
   title,
@@ -11,8 +13,15 @@ export default function Content({
   titleComponent?: React.ReactNode;
   description?: string;
 }) {
+  const bg = useThemeColor({}, "background");
+
   return (
     <View style={styles.container}>
+      <LinearGradient
+        colors={[bg, bg, "transparent"]}
+        locations={[0, 0.6, 1]}
+        style={styles.background}
+      />
       {titleComponent ||
         (title && <ThemedText type="title">{title}</ThemedText>)}
       {description && (
@@ -38,5 +47,12 @@ const styles = StyleSheet.create({
     padding: 18,
     paddingVertical: 16,
     gap: 12,
+  },
+  background: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
 });

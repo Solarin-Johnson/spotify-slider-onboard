@@ -4,10 +4,8 @@ import { ThemedView } from "@/components/ThemedView";
 import { FACTOR, ThemedText } from "@/components/ThemedText";
 import Header from "@/components/ui/Header";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import Content from "@/components/ui/Content";
-import { Image } from "expo-image";
 import { FloatingButton } from "@/components/ui/Button";
 import BrandLogo from "@/components/ui/BrandLogo";
 
@@ -43,7 +41,13 @@ export default function Index() {
           </View>
         }
       />
-      <View style={{ flex: 1, width: "100%" }}>
+      <View
+        style={{
+          flex: 1,
+          width: "100%",
+          // backgroundColor: "red",
+        }}
+      >
         <Content
           title="Connect to Wi-Fi"
           titleComponent={

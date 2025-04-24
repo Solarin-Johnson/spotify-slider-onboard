@@ -33,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({
       <View style={styles.content}>
         <View style={styles.leftContainer}>
           {leftComponent ? (
-            <TouchableOpacity onPress={onLeftPress}>
+            <TouchableOpacity onPress={onLeftPress} activeOpacity={0.7}>
               <AdaptiveElement>{leftComponent}</AdaptiveElement>
             </TouchableOpacity>
           ) : (
@@ -51,7 +51,7 @@ const Header: React.FC<HeaderProps> = ({
 
         <View style={styles.rightContainer}>
           {rightComponent ? (
-            <TouchableOpacity onPress={onRightPress}>
+            <TouchableOpacity onPress={onRightPress} activeOpacity={0.7}>
               <AdaptiveElement>{rightComponent}</AdaptiveElement>
             </TouchableOpacity>
           ) : (

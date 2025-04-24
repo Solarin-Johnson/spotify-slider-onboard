@@ -1,12 +1,5 @@
 import React, { ReactNode } from "react";
-import {
-  TouchableOpacity,
-  Text,
-  StyleSheet,
-  ViewStyle,
-  TextStyle,
-  View,
-} from "react-native";
+import { Text, StyleSheet, ViewStyle, TextStyle, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Pressable } from "react-native";
 import Animated, {
@@ -14,6 +7,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from "react-native-reanimated";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 interface ButtonProps {
   text?: string;
@@ -23,12 +17,10 @@ interface ButtonProps {
   disabled?: boolean;
   style?: ViewStyle;
   textStyle?: TextStyle;
-  activeOpacity?: number;
 }
-
 const springConfig = {
-  damping: 20,
-  stiffness: 100,
+  damping: 30,
+  stiffness: 70,
 };
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
@@ -40,7 +32,6 @@ const Button = ({
   disabled = false,
   style,
   textStyle,
-  activeOpacity = 0.7,
 }: ButtonProps) => {
   const scale = useSharedValue(1);
 
@@ -70,7 +61,6 @@ const Button = ({
   );
 };
 
-// FloatingButton component that extends ButtonProps
 interface FloatingButtonProps extends ButtonProps {
   bottom?: number;
   right?: number;
@@ -79,7 +69,7 @@ interface FloatingButtonProps extends ButtonProps {
 }
 
 export const FloatingButton = ({
-  bottom,
+  bottom = 0,
   left = 0,
   right,
   top,
@@ -87,15 +77,19 @@ export const FloatingButton = ({
   ...props
 }: FloatingButtonProps) => {
   const { bottom: safeBottom } = useSafeAreaInsets();
+  const bg = useThemeColor({}, "background");
+
   return (
     <View
       style={[
         styles.floating,
         {
-          bottom: bottom || safeBottom,
+          bottom: bottom,
           right: left === undefined ? right : undefined,
+          paddingBottom: safeBottom + 28,
           left,
           top,
+          backgroundColor: bg + "80",
         },
       ]}
     >
@@ -125,6 +119,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     padding: 18,
+    paddingVertical: 42,
   },
 });
 
