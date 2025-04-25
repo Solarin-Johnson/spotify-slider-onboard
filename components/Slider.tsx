@@ -18,7 +18,7 @@ import Svg, { Line } from "react-native-svg";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { opacity } from "react-native-reanimated/lib/typescript/Colors";
 
-const ROTATION_FACTOR = 0.04;
+const ROTATION_FACTOR = 0.05;
 const STOP_ANGLE = 270;
 const SPRING_CONFIG = {
   damping: 15,
@@ -216,7 +216,7 @@ const LinearRuler: React.FC<RulerProps> = ({
 
     const animatedProps = useAnimatedProps(() => {
       const currentIndex = Math.min(
-        progress.value * totalTicks,
+        Math.max(0, progress.value * totalTicks),
         totalTicks - 1
       );
 
