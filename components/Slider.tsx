@@ -4,19 +4,28 @@ import { Artist } from "@/constants/config";
 import { Image } from "expo-image";
 import { FACTOR, ThemedText } from "./ThemedText";
 import Animated, {
+  SharedValue,
+  useAnimatedProps,
   useAnimatedStyle,
+  useDerivedValue,
   useSharedValue,
   withDecay,
   withSpring,
+  withTiming,
 } from "react-native-reanimated";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import Svg, { Line } from "react-native-svg";
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { opacity } from "react-native-reanimated/lib/typescript/Colors";
 
 const ROTATION_FACTOR = 0.04;
 const STOP_ANGLE = 270;
 const SPRING_CONFIG = {
   damping: 15,
   stiffness: 120,
-  mass: 1,
+};
+const RULER_TIMING_CONFIG = {
+  duration: 50,
 };
 
 const CARD_WIDTH = 250 + FACTOR * 8;
@@ -28,6 +37,8 @@ const center = {
   x: diameter / 2,
   y: diameter / 2,
 };
+
+const AnimatedLine = Animated.createAnimatedComponent(Line);
 
 const anglePerCard = 360 / Artist.length;
 
@@ -83,35 +94,42 @@ export default function Slider() {
   });
 
   return (
-    <GestureDetector gesture={pan}>
-      <Animated.View style={[styles.container, animatedStyles, {}]}>
-        {Artist.map((_, i) => {
-          const len = Artist.length;
-          const angle = (i / len) * (2 * Math.PI);
-          const x = center.x + radius * Math.cos(angle);
-          const y = center.y + radius * Math.sin(angle);
+    <View style={{ flex: 1, justifyContent: "center" }}>
+      <GestureDetector gesture={pan}>
+        <Animated.View style={[styles.container, animatedStyles, {}]}>
+          {Artist.map((_, i) => {
+            const len = Artist.length;
+            const angle = (i / len) * (2 * Math.PI);
+            const x = center.x + radius * Math.cos(angle);
+            const y = center.y + radius * Math.sin(angle);
 
-          const rotation = (i / len) * 360;
+            const rotation = (i / len) * 360;
 
-          if (rotation < 270)
-            return (
-              <View
-                key={i}
-                style={[
-                  styles.view,
-                  {
-                    left: x - CARD_WIDTH / 2,
-                    top: y - CARD_HEIGHT / 2,
-                    transform: [{ rotate: `${rotation}deg` }],
-                  },
-                ]}
-              >
-                <SliderCard item={_} />
-              </View>
-            );
-        })}
-      </Animated.View>
-    </GestureDetector>
+            if (rotation < 270)
+              return (
+                <View
+                  key={i}
+                  style={[
+                    styles.view,
+                    {
+                      left: x - CARD_WIDTH / 2,
+                      top: y - CARD_HEIGHT / 2,
+                      transform: [{ rotate: `${rotation}deg` }],
+                    },
+                  ]}
+                >
+                  <SliderCard item={_} />
+                </View>
+              );
+          })}
+        </Animated.View>
+      </GestureDetector>
+      <LinearRuler
+        angle={offset}
+        totalTicks={Artist.length * 1.2}
+        height={CARD_HEIGHT}
+      />
+    </View>
   );
 }
 
@@ -164,6 +182,80 @@ const SliderCard = ({ item }: { item: Artist }) => {
   );
 };
 
+interface RulerProps {
+  angle: SharedValue<number>;
+  totalTicks?: number;
+  width?: number;
+  height?: number;
+  tickSpacing?: number;
+  tickHeight?: number;
+  activeHeight?: number;
+}
+
+const LinearRuler: React.FC<RulerProps> = ({
+  angle,
+  totalTicks = 10,
+  width = 40,
+  height = 360,
+  tickSpacing = 4,
+  tickHeight = 5,
+  activeHeight = 10,
+}) => {
+  const text = useThemeColor({}, "text");
+
+  const ticks = Array.from({ length: totalTicks }, (_, i) => {
+    const factor = FACTOR / 3.5;
+    const y = (i + tickSpacing * factor) * tickSpacing;
+
+    const progress = useDerivedValue(() => {
+      const threshold = 10;
+      const smoothedAngle = Math.abs(angle.value) > threshold ? angle.value : 0;
+
+      return -smoothedAngle / STOP_ANGLE;
+    });
+
+    const animatedProps = useAnimatedProps(() => {
+      const currentIndex = Math.min(
+        progress.value * totalTicks,
+        totalTicks - 1
+      );
+
+      const distance = Math.abs(currentIndex - i);
+      let height = tickHeight * factor;
+      let _activeHeight = activeHeight * factor;
+
+      if (distance < 0.5) height = _activeHeight;
+      else if (distance < 1.5) height = _activeHeight * 0.7;
+
+      return {
+        x2: withTiming(width - height, RULER_TIMING_CONFIG),
+        opacity: withTiming(
+          distance < 0.5 ? 1 : distance < 1.5 ? 0.7 : 0.5,
+          RULER_TIMING_CONFIG
+        ),
+      };
+    });
+
+    return (
+      <AnimatedLine
+        key={i}
+        x1={width}
+        x2={width}
+        y1={y}
+        y2={y}
+        strokeWidth={1.1 * factor}
+        stroke={text + "70"}
+        animatedProps={animatedProps}
+      />
+    );
+  });
+  return (
+    <Svg width={width} height={height} style={styles.progressContainer}>
+      {ticks}
+    </Svg>
+  );
+};
+
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
@@ -185,5 +277,10 @@ const styles = StyleSheet.create({
   text: {
     color: "white",
     fontWeight: "bold",
+  },
+  progressContainer: {
+    position: "absolute",
+    right: 10,
+    top: CONTAINER_WIDTH / 4 + CARD_HEIGHT / 2,
   },
 });
