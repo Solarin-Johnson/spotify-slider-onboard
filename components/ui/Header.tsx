@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import AdaptiveElement from "./AdaptiveElement";
+import { useThemeColor } from "@/hooks/useThemeColor";
 
 interface HeaderProps {
   title?: string;
@@ -21,12 +22,14 @@ const Header: React.FC<HeaderProps> = ({
   onRightPress,
 }) => {
   const { top } = useSafeAreaInsets();
+  const bg = useThemeColor({}, "background");
   return (
     <View
       style={[
         styles.container,
         {
           paddingTop: top + 16,
+          backgroundColor: bg,
         },
       ]}
     >

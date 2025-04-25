@@ -14,6 +14,7 @@ import * as NavigationBar from "expo-navigation-bar";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Platform } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -23,8 +24,9 @@ export default function RootLayout() {
   const [loaded] = useFonts({
     InterRegular: require("../assets/fonts/Inter-Regular.ttf"),
     InterMedium: require("../assets/fonts/Inter-Medium.ttf"),
-    InterBold: require("../assets/fonts/Inter-Bold.ttf"),
     InterSemiBold: require("../assets/fonts/Inter-SemiBold.ttf"),
+    InterBold: require("../assets/fonts/Inter-Bold.ttf"),
+    InterBold24: require("../assets/fonts/Inter-Bold-24.ttf"),
   });
 
   useEffect(() => {
@@ -52,7 +54,7 @@ export default function RootLayout() {
   }
 
   return (
-    <>
+    <GestureHandlerRootView>
       <SafeAreaProvider>
         <ThemeProvider
           value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
@@ -63,6 +65,6 @@ export default function RootLayout() {
           <StatusBar style="auto" />
         </ThemeProvider>
       </SafeAreaProvider>
-    </>
+    </GestureHandlerRootView>
   );
 }

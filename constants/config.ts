@@ -36,12 +36,12 @@ export const Artist: Artist[] = [
     image:
       "https://npr.brightspotcdn.com/legacy/wp-content/uploads/20190715_CigarettesAfterSex_EbruYildiz_388-2.jpg",
     bg: "#2A3537",
-    color: "#FFABDC",
+    color: "#C9CBCE",
   },
   {
     id: "5",
     name: "Sigur Rós",
-    image: 'require("../assets/images/sigurros.jpg")',
+    image: require("../assets/images/sigurros.jpg"),
     bg: "#DA9160",
     color: "#232123",
   },
@@ -51,7 +51,7 @@ export const Artist: Artist[] = [
     image:
       "https://static.wikia.nocookie.net/music/images/0/00/011620-Tame-Impala-Chuff-Media-696x522.jpg/revision/latest?cb=20201018071033",
     bg: "#73B0FB",
-    color: "#FDDFDA",
+    color: "#FBE1D9",
   },
   {
     id: "7",
@@ -81,18 +81,24 @@ export const Artist: Artist[] = [
     name: "King Krule",
     bg: "#E74C3C",
     color: "#1E272E",
+    image:
+      "https://assets.rebelmouse.io/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbWFnZSI6Imh0dHBzOi8vYXNzZXRzLnJibC5tcy8yMjc4NjYwMy9vcmlnaW4uanBnIiwiZXhwaXJlc19hdCI6MTc1NzA1OTczMn0.383tKP9k7trdJs41tNBzVnCvCCss9VHHJS3OFbsjlGE/img.jpg?width=1200&height=800&quality=100&coordinates=0%2C141%2C0%2C829",
   },
   {
     id: "11",
     name: "The xx",
     bg: "#2C3E50",
     color: "#ECF0F1",
+    image:
+      "https://vinyloteka.lt/wp-content/uploads/2022/01/R-3855300-1493768259-9273.jpg",
   },
   {
     id: "12",
     name: "Sufjan Stevens",
-    bg: "#F9E79F",
-    color: "#8E44AD",
+    bg: "#CCAA8F",
+    color: "#161919",
+    image:
+      "https://static.wikia.nocookie.net/taylor-swift-fanon/images/4/4e/Sufjanstevens.jpg/revision/latest/scale-to-width-down/340?cb=20240803232828",
   },
   {
     id: "13",
